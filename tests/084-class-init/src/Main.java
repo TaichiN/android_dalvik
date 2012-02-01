@@ -71,10 +71,18 @@ public class Main {
 
     static class FieldThread extends Thread {
         public void run() {
-            /* allow class init to start */
-            Main.sleep(200);
+            /* allow SlowInit's <clinit> to start */
+            Main.sleep(1000);
 
-            /* print fields; should delay until class init completes */
+            /* collect fields; should delay until class init completes */
+            int field0, field1, field2, field3;
+            field0 = SlowInit.FIELD0.getValue();
+            field1 = SlowInit.FIELD1.getValue();
+            field2 = SlowInit.FIELD2.getValue();
+            field3 = SlowInit.FIELD3.getValue();
+
+            /* let MethodThread print first */
+            Main.sleep(5000);
             System.out.println("Fields (child thread): " +
                 SlowInit.FIELD0.getValue() + SlowInit.FIELD1.getValue() +
                 SlowInit.FIELD2.getValue() + SlowInit.FIELD3.getValue());
@@ -83,8 +91,8 @@ public class Main {
 
     static class MethodThread extends Thread {
         public void run() {
-            /* allow class init to start */
-            Main.sleep(400);
+            /* allow SlowInit's <clinit> to start */
+            Main.sleep(1000);
 
             /* use a method that shouldn't be accessible yet */
             SlowInit.printMsg("MethodThread message");
