@@ -493,7 +493,7 @@ bool dvmCompilerLoopOpt(CompilationUnit *cUnit)
     fillPhiNodeContents(cUnit);
 
     /* Constant propagation */
-    cUnit->isConstantV = dvmAllocBitVector(cUnit->numSSARegs, false);
+    cUnit->isConstantV = dvmCompilerAllocBitVector(cUnit->numSSARegs, false);
     cUnit->constantValues = dvmCompilerNew(sizeof(int) * cUnit->numSSARegs,
                                            true);
     dvmCompilerDataFlowAnalysisDispatcher(cUnit,
@@ -503,7 +503,7 @@ bool dvmCompilerLoopOpt(CompilationUnit *cUnit)
     /* Find induction variables - basic and dependent */
     loopAnalysis->ivList = dvmCompilerNew(sizeof(GrowableList), true);
     dvmInitGrowableList(loopAnalysis->ivList, 4);
-    loopAnalysis->isIndVarV = dvmAllocBitVector(cUnit->numSSARegs, false);
+    loopAnalysis->isIndVarV = dvmCompilerAllocBitVector(cUnit->numSSARegs, false);
     dvmCompilerDataFlowAnalysisDispatcher(cUnit,
                                           dvmCompilerFindInductionVariables);
     DEBUG_LOOP(dumpIVList(cUnit);)
