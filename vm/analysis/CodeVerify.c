@@ -3408,7 +3408,7 @@ static bool doCodeVerification(const Method* meth, InsnFlags* insnFlags,
             if (instr == kPackedSwitchSignature ||
                 instr == kSparseSwitchSignature ||
                 instr == kArrayDataSignature ||
-                (instr == OP_NOP &&
+                (instr == OP_NOP && (insnIdx + 1 < insnsSize) &&
                  (meth->insns[insnIdx+1] == kPackedSwitchSignature ||
                   meth->insns[insnIdx+1] == kSparseSwitchSignature ||
                   meth->insns[insnIdx+1] == kArrayDataSignature)))
